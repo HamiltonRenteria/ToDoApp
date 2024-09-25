@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api';
 
 interface Todo {
   id: number;
@@ -15,33 +16,41 @@ export class TodoComponent implements OnInit {
   todos: Todo[] = [];
   newTodo: string = '';
 
+  constructor(private apiService: ApiService) {}
+
   ngOnInit() {
-    this.todos = [
-      { id: 1, task: 'Aprender Angular 18', completed: false },
-      { id: 2, task: 'Build a To-do list app', completed: false },
-    ];
+    this.getTodos();
   }
 
-  addTodo() {
+  getTodos(): void {
+    this.apiService.getTodos().subscribe(todos => {
+      this.todos = todos;
+    });
+  }
+
+  addTodo(): void {
     if (this.newTodo.trim()) {
       const newTask: Todo = {
-        id: this.todos.length + 1,
+        id: 0,  
         task: this.newTodo,
-        completed: false,
+        completed: false
       };
-      this.todos.push(newTask);
-      this.newTodo = '';
+      this.apiService.createTodo(newTask).subscribe(todo => {
+        this.todos.push(todo);
+        this.newTodo = '';
+      });
     }
   }
 
-  toggleComplete(id: number) {
-    const todo = this.todos.find(item => item.id === id);
-    if (todo) {
-      todo.completed = !todo.completed;
-    }
+
+  toggleComplete(todo: Todo): void {
+    todo.completed = !todo.completed;
+    this.apiService.updateTodo(todo.id, todo).subscribe();
   }
 
-  deleteTodo(id: number) {
-    this.todos = this.todos.filter(todo => todo.id !== id);
+  deleteTodo(todo: Todo): void {
+    this.apiService.deleteTodo(todo.id).subscribe(() => {
+      this.todos = this.todos.filter(t => t.id !== todo.id);
+    });
   }
 }
