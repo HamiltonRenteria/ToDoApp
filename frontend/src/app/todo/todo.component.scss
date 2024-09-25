@@ -1,0 +1,41 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .todo-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .todo-list li {
+    background: #f9f9f9;
+    margin: 5px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+  }
+  
+  .todo-list li.completed {
+    text-decoration: line-through;
+  }
+  
+  .add-todo {
+    margin-bottom: 10px;
+  }
+  
+  .add-todo input {
+    width: 75%;
+    padding: 5px;
+    margin-right: 10px;
+  }
+  
+  @media (max-width: 600px) {
+    .add-todo input {
+      width: 60%;
+    }
+  }
+  

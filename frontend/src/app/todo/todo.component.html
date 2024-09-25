@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header" style="color: aliceblue; background-color: aquamarine;">
+          IRIS
+        </div>
+        <div class="card-body" >
+          <h5 class="card-title">To do List</h5>
+          <p></p>
+          <div class="add-todo">
+            <input [(ngModel)]="newTodo" placeholder="Ingresa nueva tarea..." />
+            <button class="btn btn-outline-success" (click)="addTodo()">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+          <br/>
+          <br/>
+          <ul class="todo-list">
+            <li *ngFor="let todo of todos" [class.completed]="todo.completed">
+              <input class="form-check-input" type="checkbox" [checked]="todo.completed" (change)="toggleComplete(todo.id)" />
+              {{ todo.task }}
+              <button class="btn btn-outline-danger" (click)="deleteTodo(todo.id)">
+                <i class="fa-solid fa-x"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+  
